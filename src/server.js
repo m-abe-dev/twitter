@@ -1,20 +1,24 @@
-const express = require('express');
-const tweetsRoutes = require('./routes/tweets');
-const db = require('./dbConfig');
+const express = require("express");
+const tweetsRoutes = require("./routes/tweets");
+const db = require("./db"); // db.js をインポート
+
+// ... その他のコード ...
 
 const app = express();
 const PORT = 3050;
 
-app.get('/', (req, res) => {
-  res.send('Hello, Twitter Backend!');
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello, Twitter Backend!");
 });
 
 // ツイート関連のルートを登録
-app.use('/tweets', tweetsRoutes);
+app.use("/tweets", tweetsRoutes);
 
 // 404エラーハンドリング
 app.use((req, res, next) => {
-  const error = new Error('Not Found');
+  const error = new Error("Not Found");
   error.status = 404;
   next(error);
 });
